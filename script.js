@@ -17,7 +17,6 @@ function startParty(gameBoard) {
 
   const fieldWithNumbers = showSelectedFigures(places, hiddenField, gameBoard);
   showNewField(fieldWithNumbers);
-
   checkEqualitySetSelected(
     places,
     fieldWithNumbers,
