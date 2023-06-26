@@ -4,7 +4,7 @@ const field = [
   ["*", "*", "*", "*"],
   ["*", "*", "*", "*"],
 ];
-const hiddenField = createHiddenField();
+const givenField = createGivenField();
 startParty();
 
 function startParty() {
@@ -15,25 +15,25 @@ function startParty() {
 }
 
 //==========================================================================================================================================================
-//Creating hiddenField
+//Creating givenField
 //==================================================================================================================================================================
 
 function shuffle(array) {
   array.sort(() => Math.random() - 0.5);
 }
 
-function createHiddenField() {
-  let hiddenField = [
+function createGivenField() {
+  let givenField = [
     [1, 2, 3, 4],
     [5, 6, 7, 8],
     [1, 2, 3, 4],
     [5, 6, 7, 8],
   ];
-  hiddenField.forEach((array) => {
+  givenField.forEach((array) => {
     shuffle(array);
   });
-  shuffle(hiddenField);
-  return hiddenField;
+  shuffle(givenField);
+  return givenField;
 }
 
 //==========================================================================================================================================================
@@ -68,7 +68,7 @@ function showSelectedFigures(coordinates) {
   });
   for (let i = 0; i < 2; i++) {
     immuField[coordinates[i].y][coordinates[i].x] =
-      hiddenField[coordinates[i].y][coordinates[i].x];
+      givenField[coordinates[i].y][coordinates[i].x];
   }
   alert(
     `Попробуйте еще раз \n${immuField[0]}\n${immuField[1]}\n${immuField[2]}\n${immuField[3]}`
@@ -78,12 +78,12 @@ function showSelectedFigures(coordinates) {
 function checkEqualitySetSelected(coordinates) {
   let arrForFigures = [];
   for (let i = 0; i < 2; i++) {
-    arrForFigures.push(hiddenField[coordinates[i].y][coordinates[i].x]);
+    arrForFigures.push(givenField[coordinates[i].y][coordinates[i].x]);
   }
   if (arrForFigures[0] === arrForFigures[1]) {
     for (let i = 0; i < 2; i++) {
       field[coordinates[i].y][coordinates[i].x] =
-        hiddenField[coordinates[i].y][coordinates[i].x];
+        givenField[coordinates[i].y][coordinates[i].x];
     }
     startParty();
   }
