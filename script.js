@@ -5,24 +5,13 @@ const field = [
   ["*", "*", "*", "*"],
 ];
 const hiddenField = createHiddenField();
-startParty(field);
+startParty();
 
-function startParty(gameBoard) {
-  const immutableBoard = gameBoard.map((array) => {
-    return [...array];
-  });
+function startParty() {
+  const coordinates = requestCoordinates();
 
-  const coordinates = requestCoordinates(gameBoard);
-  const places = findPlaces(coordinates);
-
-  const fieldWithNumbers = showSelectedFigures(places, hiddenField, gameBoard);
-  showNewField(fieldWithNumbers);
-  checkEqualitySetSelected(
-    places,
-    fieldWithNumbers,
-    hiddenField,
-    immutableBoard
-  );
+  showSelectedFigures(coordinates);
+  checkEqualitySetSelected(coordinates);
 }
 
 //==========================================================================================================================================================
@@ -51,51 +40,52 @@ function createHiddenField() {
 //Finding user-specified values
 //==================================================================================================================================================================
 
-function requestCoordinates(gameBoard) {
+function requestCoordinates() {
   coordinates = prompt(
-    `Поле выглядит так\n${gameBoard[0]}\n${gameBoard[1]}\n${gameBoard[2]}\n${gameBoard[3]}\n Укажите 2 места на поле. Введите значения координат строкой 'xyxy'`
+    `Поле выглядит так\n${field[0]}\n${field[1]}\n${field[2]}\n${field[3]}\n Укажите 2 места на поле. Введите значения координат строкой 'xyxy' где х - номер строки, a y - номер столбца`
   );
-  return coordinates;
-}
 
-function findPlaces(coordinates) {
-  return [
-    { y: coordinates[0], x: coordinates[1] },
-    { y: coordinates[2], x: coordinates[3] },
-  ];
+  const arr = coordinates
+    .split("")
+    .every((e) => ["0", "1", "2", "3"].includes(e));
+  if (arr === false) {
+    requestCoordinates(field);
+  } else {
+    return [
+      { y: coordinates[0], x: coordinates[1] },
+      { y: coordinates[2], x: coordinates[3] },
+    ];
+  }
 }
 
 //==========================================================================================================================================================
 //Show the user a field with open values
 //==================================================================================================================================================================
 
-function showSelectedFigures(places, hiddenField, gameBoard) {
-  let fieldWithNumbers = [];
+function showSelectedFigures(coordinates) {
+  const immuField = field.map((array) => {
+    return [...array];
+  });
   for (let i = 0; i < 2; i++) {
-    gameBoard[places[i].y][places[i].x] = hiddenField[places[i].y][places[i].x];
+    immuField[coordinates[i].y][coordinates[i].x] =
+      hiddenField[coordinates[i].y][coordinates[i].x];
   }
-  fieldWithNumbers = gameBoard;
-  return fieldWithNumbers;
+  alert(
+    `Попробуйте еще раз \n${immuField[0]}\n${immuField[1]}\n${immuField[2]}\n${immuField[3]}`
+  );
 }
 
-function checkEqualitySetSelected(
-  places,
-  fieldWithNumbers,
-  hiddenField,
-  immutableBoard
-) {
+function checkEqualitySetSelected(coordinates) {
   let arrForFigures = [];
   for (let i = 0; i < 2; i++) {
-    arrForFigures.push(hiddenField[places[i].y][places[i].x]);
+    arrForFigures.push(hiddenField[coordinates[i].y][coordinates[i].x]);
   }
   if (arrForFigures[0] === arrForFigures[1]) {
-    startParty(fieldWithNumbers);
+    for (let i = 0; i < 2; i++) {
+      field[coordinates[i].y][coordinates[i].x] =
+        hiddenField[coordinates[i].y][coordinates[i].x];
+    }
+    startParty();
   }
-  startParty(immutableBoard);
-}
-
-function showNewField(newField) {
-  alert(
-    `Попробуйте еще раз \n${newField[0]}\n${newField[1]}\n${newField[2]}\n${newField[3]}`
-  );
+  startParty();
 }
