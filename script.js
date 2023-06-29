@@ -4,14 +4,26 @@ const field = [
   ["*", "*", "*", "*"],
   ["*", "*", "*", "*"],
 ];
+
 const fieldWithKnownValues = createfieldWithKnownValues();
 startParty();
 
 function startParty() {
-  const coordinates = requestCoordinates();
+  for (let i = 0; i < field.length; i++) {
+    if (field[i].includes("*")) {
+      const coordinates = requestCoordinates();
 
-  showSelectedFigures(coordinates);
-  checkEqualitySetSelected(coordinates);
+      showSelectedFigures(coordinates);
+      checkEqualitySetSelected(coordinates);
+    }
+    theEndOfGame();
+  }
+}
+
+function theEndOfGame() {
+  prompt(
+    `Конец игры \n${field[0]}\n${field[1]}\n${field[2]}\n${field[3]}\n Вы нашли 8 пар`
+  );
 }
 
 //==========================================================================================================================================================
