@@ -81,10 +81,10 @@ function checkEqualitySetSelected(coordinates) {
     fieldWithKnownValues[coordinates[0].y][coordinates[0].x] ===
     fieldWithKnownValues[coordinates[1].y][coordinates[1].x]
   ) {
-    for (let i = 0; i < 2; i++) {
-      field[coordinates[i].y][coordinates[i].x] =
-        fieldWithKnownValues[coordinates[i].y][coordinates[i].x];
-    }
+    field[coordinates[0].y][coordinates[0].x] =
+      fieldWithKnownValues[coordinates[0].y][coordinates[0].x];
+    field[coordinates[1].y][coordinates[1].x] =
+      fieldWithKnownValues[coordinates[1].y][coordinates[1].x];
   }
   startParty();
 }
